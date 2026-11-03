@@ -467,6 +467,20 @@ body{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weigh
 .rdone-t{font-family:"Great Vibes",cursive;font-size:44px;color:var(--red);line-height:1.2;margin-top:8px}
 .rdone p{font-style:italic;font-size:19px;color:var(--muted);margin:8px auto 0;max-width:28ch}
 .rbtn:disabled{opacity:.7;cursor:default}
+
+/* ---------- background music ---------- */
+.bgm{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:45;width:42px;height:42px;border-radius:50%;
+  border:1px solid rgba(230,213,180,.8);background:var(--red);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;
+  padding:0;cursor:pointer;box-shadow:0 6px 14px rgba(60,10,20,.35);opacity:0;transform:scale(.6);pointer-events:none;
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,1.4,.3,1)}
+.bgm.show{opacity:1;transform:none;pointer-events:auto}
+body.hostmode .bgm{display:none}
+.bgm svg{width:20px;height:20px}
+.bgm .slash{display:none}
+.bgm.paused .slash{display:block}
+.bgm.playing svg{animation:spin 6s linear infinite}
+.bgm:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.bgm.playing svg{animation:none}}
 </style>
 </head>
 <body>
@@ -546,6 +560,10 @@ body{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-weigh
     <svg class="sealmini" viewBox="0 0 120 150" aria-hidden="true"><use href="#sealArt"/></svg>
   </button>
 </div>
+<audio id="bgmAudio" src="audio/nhac-cuoi.mp3" loop preload="auto"></audio>
+<button class="bgm paused" id="bgm" type="button" aria-label="Bật nhạc" aria-pressed="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path class="slash" d="M3 3l18 18"/></svg>
+</button>
 <div id="flash" aria-hidden="true"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 
@@ -891,6 +909,17 @@ Gia đình chú Năm"></textarea>
   document.getElementById('openBtn').addEventListener('click',openLetter);
   document.getElementById('enter').addEventListener('click',enter);
   document.getElementById('skip').addEventListener('click',function(){timers.forEach(clearTimeout);opened=true;enter()});
+  // ----- background music: starts on the guest's first tap on the cover (browsers block autoplay) -----
+  var bgmA=document.getElementById('bgmAudio'),bgmB=document.getElementById('bgm'),bgmMuted=false;
+  bgmA.volume=.6;
+  function bgmUI(){var on=!bgmA.paused;bgmB.classList.toggle('playing',on);bgmB.classList.toggle('paused',!on);
+    bgmB.setAttribute('aria-pressed',on?'true':'false');bgmB.setAttribute('aria-label',on?'Tắt nhạc':'Bật nhạc')}
+  function bgmPlay(){var p=bgmA.play();if(p&&p.catch)p.catch(function(){});bgmB.classList.add('show')}
+  bgmA.addEventListener('play',bgmUI);bgmA.addEventListener('pause',bgmUI);
+  cover.addEventListener('click',function(){if(!bgmMuted&&bgmA.paused)bgmPlay()});
+  bgmB.addEventListener('click',function(){if(bgmA.paused){bgmMuted=false;bgmPlay()}else{bgmMuted=true;bgmA.pause()}});
+  document.addEventListener('visibilitychange',function(){if(document.hidden){if(!bgmA.paused){bgmA.pause();bgmA._auto=true}}
+    else if(bgmA._auto){bgmA._auto=false;if(!bgmMuted)bgmPlay()}});
   function resetCover(){timers.forEach(clearTimeout);timers=[];opened=false;cover.className='';parts=[];
     cover.style.display='none';void cover.offsetWidth;cover.style.display='';geo();animateLace(300);
     if(!sparkOn){sparkOn=true;if(!reduce)requestAnimationFrame(sparkLoop)}startIntro()}
