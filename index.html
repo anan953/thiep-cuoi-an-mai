@@ -747,8 +747,11 @@ Gia đình chú Năm"></textarea>
 (function(){
   var B62='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   var DEFAULT_BASE='__AUTO__';
-  function enc(s){var by=new TextEncoder().encode(s),n=1n;for(var i=0;i<by.length;i++)n=n*256n+BigInt(by[i]);var o='';while(n>0n){o=B62[Number(n%62n)]+o;n=n/62n}return 'k'+o}
-  function dec(c){try{if(c[0]!=='k')return null;var n=0n;for(var i=1;i<c.length;i++){var v=B62.indexOf(c[i]);if(v<0)return null;n=n*62n+BigInt(v)}var a=[];while(n>255n){a.unshift(Number(n%256n));n=n/256n}if(n!==1n)return null;return new TextDecoder('utf-8',{fatal:true}).decode(new Uint8Array(a))}catch(e){return null}}
+  // base62 encode/decode without BigInt (identical output to the old version, works on older phones)
+  function conv(d,from,to){var out=[];while(d.length){var q=[],r=0;for(var i=0;i<d.length;i++){var x=r*from+d[i],qd=Math.floor(x/to);r=x%to;if(q.length||qd)q.push(qd)}out.unshift(r);d=q}return out}
+  function enc(s){var by=Array.prototype.slice.call(new TextEncoder().encode(s));by.unshift(1);return 'k'+conv(by,256,62).map(function(v){return B62[v]}).join('')}
+  function dec(c){try{if(!c||c[0]!=='k'||c.length<2)return null;var d=[];for(var i=1;i<c.length;i++){var v=B62.indexOf(c[i]);if(v<0)return null;d.push(v)}
+    while(d.length&&d[0]===0)d.shift();var a=conv(d,62,256);if(a[0]!==1)return null;return new TextDecoder('utf-8',{fatal:true}).decode(new Uint8Array(a.slice(1)))}catch(e){return null}}
   function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
   var toastT;function toast(t){var el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('on')},1800)}
 
@@ -995,7 +998,7 @@ Gia đình chú Năm"></textarea>
   function guests(){try{return JSON.parse(store('wd-guests')||'[]')}catch(e){return[]}}
   function saveG(g){store('wd-guests',JSON.stringify(g))}
   function fullName(){var t=document.getElementById('title').value,n=document.getElementById('nm').value.trim().replace(/\s+/g,' ');return n?(t?t+' '+n:n):''}
-  function link(name){return (baseI.value.trim().split('#')[0]||'')+'#'+enc(name)}
+  function link(name){var b=document.getElementById('base');return ((b&&b.value.trim())||guessBase()).split('#')[0]+'#'+enc(name)}
   function copy(text){
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){toast('Đã sao chép link')},function(){fallback(text)})}else fallback(text);
   }
@@ -1034,7 +1037,7 @@ Gia đình chú Năm"></textarea>
   };
   document.getElementById('nm').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('make').click()});
   document.getElementById('preview').onclick=function(){var n=fullName();if(!n){toast('Nhập tên khách mời trước');return}
-    resetCover();location.hash=enc(n);window.scrollTo(0,0)};
+    location.hash=enc(n);body.classList.remove('hostmode');resetCover();window.scrollTo(0,0)};
   document.getElementById('makeAll').onclick=function(){
     var names=document.getElementById('bulk').value.split(/\n/).map(function(x){return x.trim().replace(/\s+/g,' ')}).filter(Boolean);
     if(!names.length){toast('Dán danh sách tên vào ô trên trước');return}
