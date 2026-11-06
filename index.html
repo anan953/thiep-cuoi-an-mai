@@ -481,6 +481,31 @@ body.hostmode .bgm{display:none}
 .bgm.playing svg{animation:spin 6s linear infinite}
 .bgm:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media (prefers-reduced-motion: reduce){.bgm.playing svg{animation:none}}
+
+/* ---------- wedding gift (bank QR) ---------- */
+.rsvp{padding-bottom:28px}
+.gift{background-color:var(--red);color:#F4EADB;padding:40px 24px 120px;text-align:center}
+.gift .sec-title{color:#F4EADB}
+.gift .sec-sub{color:rgba(244,234,219,.78);max-width:30ch;margin-left:auto;margin-right:auto;line-height:1.5}
+.gift .rorn{display:block;color:#C9A96E;margin:0 auto 26px}
+.gcard{position:relative;max-width:360px;margin:0 auto;background:var(--card);color:var(--ink);padding:30px 26px 26px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.gcard::before{content:"";position:absolute;inset:8px;border:1px solid rgba(168,138,92,.55);pointer-events:none}
+.gcard .role{font-variant:small-caps;font-size:16px;letter-spacing:.14em;font-weight:500;color:var(--muted)}
+.gcard .who{font-family:"Great Vibes",cursive;font-size:38px;line-height:1.15;color:var(--red);margin:2px 0 16px}
+.qrbox{position:relative;width:min(100%,232px);margin:0 auto;padding:14px;background:#FFFDF9;border:1px solid var(--gold)}
+.qrbox::before,.qrbox::after{content:"";position:absolute;width:18px;height:18px;border:1.5px solid var(--gold)}
+.qrbox::before{left:-6px;top:-6px;border-right:0;border-bottom:0}
+.qrbox::after{right:-6px;bottom:-6px;border-left:0;border-top:0}
+.qrbox svg.qr{display:block;width:100%;height:auto}
+.gbank{margin-top:18px;font-variant:small-caps;font-size:16px;letter-spacing:.12em;color:var(--muted)}
+.gacc{font-size:26px;font-weight:600;letter-spacing:.06em;font-variant-numeric:lining-nums tabular-nums;margin:2px 0 0}
+.gname{font-size:15px;letter-spacing:.2em;color:var(--muted)}
+.gops{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.gops .rbtn{flex:1 1 auto}
+.gnote{font-size:15px;font-style:italic;color:var(--muted);margin:14px 0 0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gcard .who{color:#EBA9B2}}
+:root[data-theme="dark"] .gcard .who{color:#EBA9B2}
+@media (max-width:400px){.gift{padding:34px 18px 110px}.gcard{padding:28px 16px 22px}}
 </style>
 </head>
 <body>
@@ -695,6 +720,25 @@ body.hostmode .bgm{display:none}
       <textarea id="rMsg" placeholder="Chúc hai bạn trăm năm hạnh phúc…"></textarea>
       <div class="rbtns"><button type="button" class="rbtn solid" id="rSend">Gửi lời chúc</button></div>
       <p class="rnote" id="rNote" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="gift" id="mung-cuoi">
+    <svg class="orn rorn rv"><use href="#orn"/></svg>
+    <h2 class="sec-title rv">Hộp mừng cưới</h2>
+    <p class="sec-sub rv">Nếu không tiện đến chung vui, bạn có thể gửi lời chúc phúc đến chúng mình qua đây.</p>
+    <div class="gcard rv">
+      <div class="role">Chú rể</div>
+      <div class="who">Hoàng Văn An</div>
+      <div class="qrbox"><svg viewBox="0 0 37 37" class="qr" role="img" aria-label="Mã QR chuyển khoản VPBank, Hoàng Văn An" shape-rendering="crispEdges"><path class="qrline" stroke="#2b1e1e" d="M0 0.5h7m1 0h2m3 0h1m3 0h1m1 0h5m1 0h1m1 0h2m1 0h7m-37 1h1m5 0h1m1 0h1m1 0h3m2 0h1m2 0h2m3 0h4m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m1 0h2m1 0h3m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m4 0h8m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h4m2 0h1m3 0h2m1 0h2m1 0h2m2 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m2 0h1m3 0h1m5 0h1m2 0h7m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-27 1h1m4 0h4m3 0h1m1 0h1m1 0h1m-27 1h1m2 0h6m1 0h1m2 0h3m3 0h1m1 0h2m1 0h2m1 0h3m2 0h1m1 0h3m-37 1h1m2 0h3m4 0h1m1 0h2m2 0h1m1 0h1m5 0h1m1 0h3m3 0h1m1 0h1m1 0h1m-37 1h2m4 0h1m2 0h1m1 0h11m1 0h2m1 0h2m1 0h3m2 0h3m-36 1h1m1 0h1m1 0h1m1 0h1m1 0h1m4 0h1m1 0h2m1 0h3m1 0h2m3 0h2m3 0h4m-36 1h3m1 0h3m2 0h1m2 0h1m1 0h4m2 0h6m2 0h4m1 0h3m-36 1h2m2 0h1m2 0h1m2 0h3m2 0h1m2 0h3m1 0h1m1 0h5m3 0h1m1 0h1m-36 1h1m2 0h1m2 0h1m1 0h2m3 0h4m1 0h2m3 0h1m1 0h1m1 0h4m2 0h2m-35 1h2m5 0h1m1 0h1m3 0h1m2 0h1m4 0h2m3 0h4m1 0h2m1 0h1m-34 1h1m4 0h1m2 0h2m1 0h2m1 0h1m1 0h2m2 0h6m1 0h1m1 0h1m1 0h2m2 0h1m-36 1h5m1 0h3m1 0h4m2 0h1m3 0h2m3 0h1m1 0h2m3 0h4m-34 1h1m2 0h2m3 0h1m1 0h1m2 0h1m2 0h1m1 0h1m2 0h3m4 0h2m1 0h3m-30 1h1m2 0h7m1 0h4m2 0h5m1 0h3m1 0h1m1 0h1m-36 1h1m2 0h1m1 0h1m4 0h1m4 0h1m1 0h2m4 0h2m1 0h1m1 0h3m1 0h2m1 0h1m-36 1h1m2 0h2m2 0h2m1 0h4m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3m-35 1h1m2 0h3m1 0h2m4 0h1m4 0h2m2 0h1m1 0h2m1 0h2m2 0h1m2 0h1m-37 1h6m3 0h1m4 0h2m2 0h1m4 0h3m2 0h2m3 0h3m-36 1h2m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m1 0h5m1 0h4m2 0h1m1 0h4m-37 1h1m1 0h3m2 0h2m1 0h1m2 0h1m4 0h2m2 0h2m1 0h2m4 0h2m3 0h1m-37 1h2m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m2 0h5m1 0h2m1 0h1m1 0h1m1 0h1m-35 1h1m1 0h3m3 0h1m5 0h1m1 0h1m2 0h1m2 0h1m1 0h3m4 0h5m-36 1h1m2 0h5m3 0h3m1 0h3m1 0h3m1 0h3m1 0h7m-26 1h1m1 0h1m1 0h1m2 0h5m1 0h4m3 0h1m3 0h1m1 0h2m-36 1h7m1 0h1m1 0h1m4 0h1m1 0h3m3 0h2m2 0h2m1 0h1m1 0h5m-37 1h1m5 0h1m1 0h3m3 0h1m4 0h3m3 0h1m2 0h1m3 0h1m3 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h4m1 0h4m2 0h2m1 0h8m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m5 0h1m1 0h2m4 0h1m3 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m2 0h1m3 0h1m3 0h3m2 0h2m1 0h2m1 0h2m1 0h2m-37 1h1m5 0h1m2 0h2m2 0h3m1 0h2m3 0h1m2 0h3m2 0h1m2 0h1m1 0h1m-36 1h7m1 0h1m1 0h5m4 0h1m1 0h7m1 0h3m1 0h4"/></svg></div>
+      <div class="gbank">VPBank</div>
+      <div class="gacc" id="gAcc">0334053773</div>
+      <div class="gname">HOANG VAN AN</div>
+      <div class="gops">
+        <button type="button" class="rbtn solid" id="gCopy">Sao chép số tài khoản</button>
+        <button type="button" class="rbtn" id="gSave">Lưu ảnh QR</button>
+      </div>
+      <p class="gnote">Mở app ngân hàng, chọn quét QR và chọn ảnh vừa lưu.</p>
     </div>
   </section>
 
@@ -989,6 +1033,29 @@ Gia đình chú Năm"></textarea>
   document.getElementById('grid').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;lbi.src=b.querySelector('img').src;lb.classList.add('on')});
   lb.addEventListener('click',function(e){if(e.target!==lbi)lb.classList.remove('on')});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
+
+  // ----- wedding gift: copy account number / save QR image -----
+  (function(){var acc=document.getElementById('gAcc').textContent.trim();
+    document.getElementById('gCopy').onclick=function(){
+      function done(){toast('Đã sao chép số tài khoản')}
+      function fb(){var t=document.createElement('textarea');t.value=acc;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px';
+        document.body.appendChild(t);t.select();try{t.setSelectionRange(0,acc.length)}catch(e){}var ok=false;try{ok=document.execCommand('copy')}catch(e){}t.remove();ok?done():toast('Số tài khoản: '+acc)}
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(acc).then(done,fb);else fb()};
+    document.getElementById('gSave').onclick=function(){
+      var svg=document.querySelector('.qrbox svg.qr'),n=37,sc=24,pad=4*sc,W=n*sc+pad*2,H=W+150;
+      var c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
+      x.fillStyle='#FFFDF9';x.fillRect(0,0,W,H);
+      var img=new Image();img.onload=function(){x.imageSmoothingEnabled=false;x.drawImage(img,pad,pad,n*sc,n*sc);
+        x.fillStyle='#2B1E1E';x.textAlign='center';x.font='600 40px Georgia,serif';x.fillText('VPBank · '+acc,W/2,W+40);
+        x.font='32px Georgia,serif';x.fillStyle='#7D6A64';x.fillText('HOANG VAN AN',W/2,W+92);
+        c.toBlob(function(b){if(!b){toast('Không lưu được, hãy chụp màn hình mã QR');return}
+          var f;try{f=new File([b],'QR-mung-cuoi-Van-An.png',{type:'image/png'})}catch(e){}
+          if(f&&navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:'QR mừng cưới'}).catch(function(){});return}
+          var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='QR-mung-cuoi-Van-An.png';document.body.appendChild(a);a.click();a.remove();
+          setTimeout(function(){URL.revokeObjectURL(a.href)},4000);toast('Đã lưu ảnh QR')},'image/png')};
+      img.onerror=function(){toast('Không lưu được, hãy chụp màn hình mã QR')};
+      img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(new XMLSerializer().serializeToString(svg).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" width="'+n+'" height="'+n+'" '))};
+  })();
 
   // ----- host panel -----
   var baseI=document.getElementById('base');
